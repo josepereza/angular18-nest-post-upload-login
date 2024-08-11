@@ -5,14 +5,15 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
-import { ConfigService } from '@nestjs/config';
+import * as dotenv from 'dotenv';
 
+dotenv.config();
 @Module({
   imports: [
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: 'your_jwt_secret',
+      secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
   ],
@@ -21,6 +22,6 @@ import { ConfigService } from '@nestjs/config';
 })
 export class AuthModule {
 
-    constructor(private configService: ConfigService) {}
+    constructor() {}
 
 }
